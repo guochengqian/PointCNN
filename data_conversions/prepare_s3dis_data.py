@@ -20,7 +20,11 @@ This .py file reads the xyzrgb.npy from the folder.
 shift xyz in each room to the center 
 normalize rgb from -0.5 to 0.5
 
+then, extract the point cloud into pillars. 
+for each pillar, cut into grids, repeat the points inside grids if the number of points is less than the average. 
 
+then, split a pillar into multiple ones if the number of points over the max_point_num. 
+Finally, generate multiple h5 file, where the data are all same size. B, N, 6.  (N = Max point Num). 
 """
 
 
@@ -141,7 +145,12 @@ def main():
                     grids, point_grid_indices, grid_point_counts = np.unique(xyz_grids, return_inverse=True,
                                                                              return_counts=True, axis=0)
                     grid_point_indices = np.split(np.argsort(point_grid_indices), np.cumsum(grid_point_counts[:-1]))
+                    # grid_point_count_avg returns the number of points of each grid in each pillar.
                     grid_point_count_avg = int(np.average(grid_point_counts))
+
+                    # repeat points in grids
+                    # if number of points in a grid is not over the average, then repeat.
+                    # else, do nothing.
                     point_indices_repeated = []
                     for grid_idx in range(grids.shape[0]):
                         point_indices_in_block = grid_point_indices[grid_idx]
@@ -154,6 +163,7 @@ def main():
                     block_point_indices[block_idx] = np.array(point_indices_repeated)
                     block_point_counts[block_idx] = len(point_indices_repeated)
 
+                # for each pillar, if over the max number of points, then split to multiple pillars.
                 for block_idx in range(idx_last_non_empty_block + 1):
                     point_indices = block_point_indices[block_idx]
                     if point_indices.shape[0] == 0:

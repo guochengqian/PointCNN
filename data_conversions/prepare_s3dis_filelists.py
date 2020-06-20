@@ -14,14 +14,14 @@ from datetime import datetime
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--folder', '-f', help='Path to data folder')
+    parser.add_argument('--folder', '-f', help='Path to data folder', default='/data/3D/s3dis_aligned')
     parser.add_argument('--h5_num', '-d', help='Number of h5 files to be loaded each time', type=int, default=8)
     parser.add_argument('--repeat_num', '-r', help='Number of repeatly using each loaded h5 list', type=int, default=2)
 
     args = parser.parse_args()
     print(args)
 
-    root = args.folder if args.folder else '../../data/s3dis/'
+    root = args.folder
 
     area_h5s = [[] for _ in range(6)]
     for area_idx in range(1, 7):
