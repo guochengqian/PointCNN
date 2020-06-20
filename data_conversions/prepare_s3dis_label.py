@@ -25,11 +25,11 @@ DEFAULT_OUTPUT_DIR = os.path.join(DEFAULT_OUTPUT_DIR, 'prepare_label_rgb')
 
 p = argparse.ArgumentParser()
 p.add_argument(
-    "-d", "--data", dest='data_dir',
+    "-d", "--data_dir",
     default=DEFAULT_DATA_DIR,
     help="Path to S3DIS data (default is %s)" % DEFAULT_DATA_DIR)
 p.add_argument(
-    "-f", "--folder", dest='output_dir',
+    "-f", "--output_dir",
     default=DEFAULT_OUTPUT_DIR,
     help="Folder to write labels (default is %s)" % DEFAULT_OUTPUT_DIR)
 
