@@ -7,8 +7,20 @@ import argparse
 import os
 import numpy as np
 
-DEFAULT_DATA_DIR = '../../data/Stanford3dDataset_v1.2_Aligned_Version'
-DEFAULT_OUTPUT_DIR = '../../data/S3DIS/prepare_label_rgb'
+"""
+prepare_s3dis_label.py
+load the xyz + color features of each objects inside each room 
+and then save features `xyzrgb.npy` into the outdir for each room. 
+.labels inside each room of the outdir is the marker, indicating we've processed this room
+"""
+
+# PointCNN use pillar-based methods. dataset is the aligned version.
+# KPConv use the unaligned version. ball sample based.
+# pointnet, DeepGCN use the preprocessed h5 file. (a subsample of the whole dataset,
+# which does not convery all the points)
+
+DEFAULT_DATA_DIR = '/data/3D/Stanford3dDataset_v1.2_Aligned_Version'
+DEFAULT_OUTPUT_DIR = '/data/3D/s3dis_aligned/prepare_label_rgb'
 
 p = argparse.ArgumentParser()
 p.add_argument(
@@ -37,43 +49,54 @@ object_dict = {
             'bookcase': 11,
             'board':    12}
 
-path_dir_areas =  os.listdir(args.data_dir)
+# subfolders of six areas.
+path_dir_areas = os.listdir(args.data_dir)
 
 for area in path_dir_areas:
+    # for each are (6 areas in total).
     path_area = os.path.join(args.data_dir, area)
     if not os.path.isdir(path_area):
         continue
+
+    # rooms in each area.
     path_dir_rooms = os.listdir(path_area)
+
     for room in path_dir_rooms:
         path_annotations = os.path.join(args.data_dir, area, room, "Annotations")
         if not os.path.isdir(path_annotations):
             continue
         print(path_annotations)
+
+        # check the existence of labels.
         path_prepare_label = os.path.join(args.output_dir, area, room)
         if os.path.exists(os.path.join(path_prepare_label, ".labels")):
             print("%s already processed, skipping" % path_prepare_label)
             continue
-        xyz_room = np.zeros((1,6))
-        label_room = np.zeros((1,1))
+
+        # prepare labels.
+        xyz_room = np.zeros((1, 6)) # xyz + color
+        label_room = np.zeros((1, 1))
         # make store directories
         if not os.path.exists(path_prepare_label):
             os.makedirs(path_prepare_label)
-        #############################
+
+        # ====> load the annotations for each object inside the room
         path_objects = os.listdir(path_annotations)
         for obj in path_objects:
-            object_key = obj.split("_", 1)[0]
+            object_key = obj.split("_", 1)[0]   # name of the object
             try:
                 val = object_dict[object_key]
             except KeyError:
                 continue
             print("%s/%s" % (room, obj[:-4]))
+
             xyz_object_path = os.path.join(path_annotations, obj)
             try:
-                xyz_object = np.loadtxt(xyz_object_path)[:,:] # (N,6)
+                xyz_object = np.loadtxt(xyz_object_path)[:, :]  # (N,6)
             except ValueError as e:
                 print("ERROR: cannot load %s: %s" % (xyz_object_path, e))
                 continue
-            label_object = np.tile(val, (xyz_object.shape[0], 1)) # (N,1)
+            label_object = np.tile(val, (xyz_object.shape[0], 1))  # (N,1)
             xyz_room = np.vstack((xyz_room, xyz_object))
             label_room = np.vstack((label_room, label_object))
 
