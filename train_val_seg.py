@@ -48,11 +48,12 @@ def main():
     print('PID:', os.getpid())
 
     print(args)
+    os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
     model = importlib.import_module(args.model)
-    setting_path = os.path.join(os.path.dirname(__file__), args.model)
+    setting_path = os.path.join(args.model+'_config')
     sys.path.append(setting_path)
-    setting = importlib.import_module(args.setting)
+    setting = importlib.import_module(args.setting)   # todo.
 
     num_epochs = args.epochs or setting.num_epochs
     batch_size = args.batch_size or setting.batch_size
@@ -149,7 +150,6 @@ def main():
                                                weights=labels_weights_sampled)
     reset_metrics_op = tf.variables_initializer([var for var in tf.local_variables()
                                                  if var.name.split('/')[0] == 'metrics'])
-
 
     _ = tf.summary.scalar('loss/train', tensor=loss_mean_op, collections=['train'])
     _ = tf.summary.scalar('t_1_acc/train', tensor=t_1_acc_op, collections=['train'])

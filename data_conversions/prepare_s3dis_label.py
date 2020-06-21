@@ -21,7 +21,6 @@ and then save features `xyzrgb.npy` into the outdir for each room.
 
 DEFAULT_DATA_DIR = '/data/3D/Stanford3dDataset_v1.2_Aligned_Version'
 DEFAULT_OUTPUT_DIR = '/data/3D/s3dis_aligned/'
-DEFAULT_OUTPUT_DIR = os.path.join(DEFAULT_OUTPUT_DIR, 'prepare_label_rgb')
 
 p = argparse.ArgumentParser()
 p.add_argument(

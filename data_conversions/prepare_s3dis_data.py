@@ -30,7 +30,7 @@ Finally, generate multiple h5 file, where the data are all same size. B, N, 6.  
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--folder', '-f', help='Path to data folder', default='/data/3D/s3dis_aligned/prepare_label_rgb')
+    parser.add_argument('--folder', '-f', help='Path to data folder', default='/data/3D/s3dis_aligned')
     parser.add_argument('--max_point_num', '-m', help='Max point number of each sample', type=int, default=8192)
     parser.add_argument('--block_size', '-b', help='Block size', type=float, default=1.5)
     parser.add_argument('--grid_size', '-g', help='Grid size', type=float, default=0.03)

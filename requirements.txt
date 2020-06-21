@@ -4,6 +4,6 @@ python-mnist
 requests
 scipy
 svgpathtools
-tensorflow-gpu==1.13.1
+tensorflow-gpu==1.14.0
 tqdm
 transforms3d
