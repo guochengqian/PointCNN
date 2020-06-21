@@ -341,6 +341,9 @@ def main():
                     start_idx = batch_size * batch_val_idx
                     end_idx = min(start_idx + batch_size, num_val)
                     batch_size_val = end_idx - start_idx
+                    if batch_size_val < batch_size:
+                        start_idx = start_idx - (batch_size - batch_size_val)
+
                     points_batch = data_val[start_idx:end_idx, ...]
                     points_num_batch = data_num_val[start_idx:end_idx, ...]
                     labels_batch = label_val[start_idx:end_idx, ...]
@@ -374,6 +377,8 @@ def main():
             start_idx = (batch_size * batch_idx_train) % num_train
             end_idx = min(start_idx + batch_size, num_train)
             batch_size_train = end_idx - start_idx
+            if batch_size_train < batch_size:
+                start_idx = start_idx - (batch_size - batch_size_train)
             points_batch = data_train[start_idx:end_idx, ...]
             points_num_batch = data_num_train[start_idx:end_idx, ...]
             labels_batch = label_train[start_idx:end_idx, ...]

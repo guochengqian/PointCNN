@@ -1,4 +1,4 @@
-# PointCNN: Convolution On X-Transformed Points
+# PointCNN: Convolution On X-Transformed Points with DeepGCN support.
 
 Created by <a href="http://yangyan.li" target="_blank">Yangyan Li</a>, Rui Bu, Mingchao Sun, Wei Wu, Xinhan Di, and <a href="https://cfcs.pku.edu.cn/baoquan/" target="_blank">Baoquan Chen</a>.
 
@@ -163,14 +163,20 @@ Here we list the commands for training/evaluating PointCNN on classification and
   ```
 
   * #### S3DIS
-  Please refer to [data_conversions](data_conversions/README.md) for downloading S3DIS, then:
+  Please refer to [data_conversions](data_conversions/README.md) for downloading S3DIS.
+  - data preprocessing: 
   ```
   cd data_conversions
   python3 prepare_s3dis_label.py --data_dir /data/3D/Stanford3dDataset_v1.2 --output_dir /data/3D/s3dis_aligned/
   python3 prepare_s3dis_data.py
   python3 prepare_s3dis_filelists.py
-  mv S3DIS_files/* ../../data/S3DIS/out_part_rgb/
-  ./train_val_s3dis.sh -g 0 -x s3dis_x8_2048_k16_fps -a 1
+  ```
+  
+  - training:
+  ```
+  python train_val_seg_deeepgcn.py -t /data/3D/s3dis_aligned/train_files_for_val_on_Area_5.txt -v /data/3D/s3dis_aligned/val_files_Area_5.txt -s ../pointcnn_exp/seg -m deepgcn -x s3dis_x8_2048_fps
+  ```
+  
   ./test_s3dis.sh -g 0 -x s3dis_x8_2048_k16_fps -a 1 -l ../../models/seg/s3dis_x8_2048_fps_k16_xxxx/ckpts/iter-xxxxx -r 4
   cd ../evaluation
   python3 s3dis_merge.py -d <path to *_pred.h5>
