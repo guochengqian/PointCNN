@@ -29,14 +29,16 @@ def main():
     parser.add_argument('--setting', '-x', help='Setting to use', required=True)
     parser.add_argument('--epochs', help='Number of training epochs (default defined in setting)', type=int)
     parser.add_argument('--batch_size', help='Batch size (default defined in setting)', type=int)
-    parser.add_argument('--log', help='Log to FILE in save folder; use - for stdout (default is log.txt)', metavar='FILE', default='log.txt')
+    parser.add_argument('--log', help='Log to FILE in save folder; use - for stdout (default is log.txt)',
+                        metavar='FILE', default='log.txt')
     parser.add_argument('--no_timestamp_folder', help='Dont save to timestamp folder', action='store_true')
     parser.add_argument('--no_code_backup', help='Dont backup code', action='store_true')
     args = parser.parse_args()
 
     if not args.no_timestamp_folder:
         time_string = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-        root_folder = os.path.join(args.save_folder, '%s_%s_%s_%d' % (args.model, args.setting, time_string, os.getpid()))
+        root_folder = os.path.join(args.save_folder,
+                                   '%s_%s_%s_%d' % (args.model, args.setting, time_string, os.getpid()))
     else:
         root_folder = args.save_folder
     if not os.path.exists(root_folder):
@@ -51,9 +53,9 @@ def main():
     os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
     model = importlib.import_module(args.model)
-    setting_path = os.path.join(os.path.dirname(__file__), args.model+'_config')
+    setting_path = os.path.join(os.path.dirname(__file__), args.model + '_config')
     sys.path.append(setting_path)
-    setting = importlib.import_module(args.setting)   # todo.
+    setting = importlib.import_module(args.setting)
 
     num_epochs = args.epochs or setting.num_epochs
     batch_size = args.batch_size or setting.batch_size
@@ -296,10 +298,10 @@ def main():
                      })
             if batch_idx_train % 10 == 0:
                 loss, t_1_acc, t_1_per_class_acc, summaries, step = sess.run([loss_mean_op,
-                                                                        t_1_acc_op,
-                                                                        t_1_per_class_acc_op,
-                                                                        summaries_op,
-                                                                        global_step])
+                                                                              t_1_acc_op,
+                                                                              t_1_per_class_acc_op,
+                                                                              summaries_op,
+                                                                              global_step])
                 summary_writer.add_summary(summaries, step)
                 print('{}-[Train]-Iter: {:06d}  Loss: {:.4f}  T-1 Acc: {:.4f}  T-1 mAcc: {:.4f}'
                       .format(datetime.now(), step, loss, t_1_acc, t_1_per_class_acc))
