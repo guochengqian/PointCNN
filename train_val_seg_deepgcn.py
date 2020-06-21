@@ -336,6 +336,7 @@ def main():
                 saver.save(sess, filename_ckpt, global_step=global_step)
                 print('{}-Checkpoint saved to {}!'.format(datetime.now(), filename_ckpt))
 
+                # todo: needs reading more here.
                 sess.run(reset_metrics_op)
                 for batch_val_idx in range(batch_num_val):
                     start_idx = batch_size * batch_val_idx
