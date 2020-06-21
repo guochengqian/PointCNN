@@ -48,10 +48,10 @@ def main():
     print('PID:', os.getpid())
 
     print(args)
-    os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+    # os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
     model = importlib.import_module(args.model)
-    setting_path = os.path.join(args.model+'_config')
+    setting_path = os.path.join(os.path.dirname(__file__), args.model+'_config')
     sys.path.append(setting_path)
     setting = importlib.import_module(args.setting)   # todo.
 
@@ -306,6 +306,7 @@ def main():
                 sys.stdout.flush()
             ######################################################################
         print('{}-Done!'.format(datetime.now()))
+
 
 if __name__ == '__main__':
     main()
