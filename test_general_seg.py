@@ -17,12 +17,13 @@ import tensorflow as tf
 from datetime import datetime
 
 
+# todo: change the saving dir.
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--filelist', '-t', help='Path to input .h5 filelist (.txt)', required=True)
     parser.add_argument('--load_ckpt', '-l', help='Path to a check point file for load', required=True)
     parser.add_argument('--max_point_num', '-p', help='Max point number of each sample', type=int, default=8192)
-    parser.add_argument('--repeat_num', '-r', help='Repeat number', type=int, default=1)
+    parser.add_argument('--repeat_num', '-r', help='Repeat number', type=int, default=4)
     parser.add_argument('--model', '-m', help='Model to use', required=True)
     parser.add_argument('--setting', '-x', help='Setting to use', required=True)
     parser.add_argument('--save_ply', '-s', help='Save results as ply', action='store_true')
@@ -30,7 +31,7 @@ def main():
     print(args)
 
     model = importlib.import_module(args.model)
-    setting_path = os.path.join(os.path.dirname(__file__), args.model)
+    setting_path = os.path.join(os.path.dirname(__file__), args.model + '_config')
     sys.path.append(setting_path)
     setting = importlib.import_module(args.setting)
 
@@ -78,10 +79,10 @@ def main():
         filenames = [os.path.join(folder, line.strip()) for line in open(args.filelist)]
         for filename in filenames:
             print('{}-Reading {}...'.format(datetime.now(), filename))
-            data_h5 = h5py.File(filename)
-            data = data_h5['data'][...].astype(np.float32)
-            data_num = data_h5['data_num'][...].astype(np.int32)
-            batch_num = data.shape[0]
+            with h5py.File(filename, "r") as data_h5:
+                data = data_h5['data'][...].astype(np.float32)
+                data_num = data_h5['data_num'][...].astype(np.int32)
+                batch_num = data.shape[0]
 
             labels_pred = np.full((batch_num, max_point_num), -1, dtype=np.int32)
             confidences_pred = np.zeros((batch_num, max_point_num), dtype=np.float32)

@@ -169,9 +169,9 @@ Here we list the commands for training/evaluating PointCNN on classification and
   python3 prepare_s3dis_label.py --data_dir /data/3D/Stanford3dDataset_v1.2 --output_dir /data/3D/s3dis_aligned/
   python3 prepare_s3dis_data.py
   python3 prepare_s3dis_filelists.py
-  mv S3DIS_files/* ../../data/S3DIS/out_part_rgb/
-  ./train_val_s3dis.sh -g 0 -x s3dis_x8_2048_k16_fps -a 1
-  ./test_s3dis.sh -g 0 -x s3dis_x8_2048_k16_fps -a 1 -l ../../models/seg/s3dis_x8_2048_fps_k16_xxxx/ckpts/iter-xxxxx -r 4
+
+  python train_val_seg -t /data/3D/s3dis_aligned/train_files_for_val_on_Area_5.txt -v /data/3D/s3dis_aligned/val_files_Area_5.txt -s ../pointcnn_exp/seg -m pointcnn_seg -x s3dis_x8_2048_fps
+  python test_general_seg.py -t /data/3D/s3dis_aligned/train_files_for_val_on_Area_5.txt -l /home/qiang/Downloads/3D_exp/pointcnn/pointcnn_seg_s3dis_x8_2048_fps_2020-06-21-04-33-23_121320/ckpt/iter-41500 -m pointcnn_seg -x s3dis_x8_2048_fps
   cd ../evaluation
   python3 s3dis_merge.py -d <path to *_pred.h5>
   python3 eval_s3dis.py
