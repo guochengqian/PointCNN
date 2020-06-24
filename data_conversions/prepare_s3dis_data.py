@@ -200,13 +200,13 @@ def main():
                             filename_h5 = os.path.join(folder, room, '%s_%d.h5' % (offset_name, idx_h5))
                             print('{}-Saving {}...'.format(datetime.now(), filename_h5))
 
-                            file = h5py.File(filename_h5, 'w')
-                            file.create_dataset('data', data=data[0:item_num, ...])
-                            file.create_dataset('data_num', data=data_num[0:item_num, ...])
-                            file.create_dataset('label', data=label[0:item_num, ...])
-                            file.create_dataset('label_seg', data=label_seg[0:item_num, ...])
-                            file.create_dataset('indices_split_to_full', data=indices_split_to_full[0:item_num, ...])
-                            file.close()
+                            with h5py.File(filename_h5, 'w') as file:
+                                file.create_dataset('data', data=data[0:item_num, ...])
+                                file.create_dataset('data_num', data=data_num[0:item_num, ...])
+                                file.create_dataset('label', data=label[0:item_num, ...])
+                                file.create_dataset('label_seg', data=label_seg[0:item_num, ...])
+                                file.create_dataset('indices_split_to_full', data=indices_split_to_full[0:item_num, ...])
+                                file.close()
 
                             if args.save_ply:
                                 print('{}-Saving ply of {}...'.format(datetime.now(), filename_h5))
