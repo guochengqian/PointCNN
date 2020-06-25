@@ -7,7 +7,7 @@ sample_num = 2048
 
 batch_size = 16
 
-num_epochs = 1024
+num_epochs = 1024   # 53248 iterations for area-5 training.
 
 label_weights = [1.0] * num_class
 
