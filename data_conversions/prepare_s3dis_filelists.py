@@ -31,7 +31,7 @@ def main():
             folder_dataset = os.path.join(folder, dataset)
             filename_h5s = ['./Area_%d/%s/%s\n' % (area_idx, dataset, filename) for filename in
                             os.listdir(folder_dataset)
-                            if filename.endswith('.h5')]
+                            if filename.endswith('.h5') and 'pred' not in filename]
             area_h5s[area_idx - 1].extend(filename_h5s)
 
     for area_idx in range(1, 7):

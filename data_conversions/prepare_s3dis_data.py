@@ -50,7 +50,7 @@ def main():
     indices_split_to_full = np.zeros((batch_size, max_point_num), dtype=np.int32)
 
     # for each area
-    for area_idx in range(2, 7):    # todo: 1, 7
+    for area_idx in range(1, 7):
         folder = os.path.join(root, 'Area_%d' % area_idx)
         rooms = [room for room in os.listdir(folder)] # rooms
         for room_idx, room in enumerate(rooms):
@@ -83,7 +83,6 @@ def main():
                 xyz_min = np.amin(xyz, axis=0, keepdims=True) - offset
                 xyz_max = np.amax(xyz, axis=0, keepdims=True)
                 block_size = (args.block_size, args.block_size, 2 * (xyz_max[0, -1] - xyz_min[0, -1]))
-                # todo: why x2 in z.
 
                 # collect pillars.
                 xyz_blocks = np.floor((xyz - xyz_min) / block_size).astype(np.int)
