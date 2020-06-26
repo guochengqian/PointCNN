@@ -221,8 +221,7 @@ def main():
         v_layer = tf_vertex.edge_conv_layer
     else:
         raise Exception("Unknown gcn type")
-    v_layer_builder = VertexLayer(v_layer,
-                                  nn)
+    v_layer_builder = VertexLayer(v_layer, nn)
 
     # Configure the gcn edge layer object
     if EDGE_LAY == 'dilated':

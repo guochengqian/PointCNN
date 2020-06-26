@@ -109,7 +109,6 @@ class Model(object):
                                      scope='adj_conv_' + 'final',
                                      is_training=self.is_training)
         out_max = tf_util.max_pool2d(out, [num_vertices, 1], padding='VALID', scope='maxpool')
-        # out_max = tf.layers.max_pooling2d(out, [num_vertices, 1], [num_vertices, 1], padding='VALID', scope='maxpool')
         expand = tf.tile(out_max, [1, num_vertices, 1, 1])
         fusion = tf.concat(axis=3, values=[expand] + graphs)
 
@@ -125,7 +124,6 @@ class Model(object):
                                      256,
                                      scope='seg/conv2',
                                      is_training=self.is_training)
-        # out = tf.layers.dropout(out, 0.3, training=self.is_training, name='dp1')
         out = tf_util.dropout(out,
                               keep_prob=0.7,
                               scope='dp1',
