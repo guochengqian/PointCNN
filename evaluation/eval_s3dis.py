@@ -13,14 +13,13 @@ import numpy as np
 gt_label_filenames = []
 pred_label_filenames = []
 
-DEFAULT_DATA_DIR = '../../data/s3dis'
 NUM_CLASSES = 13
 
 p = argparse.ArgumentParser()
 p.add_argument(
     "-d", "--data", dest='data_dir',
-    default=DEFAULT_DATA_DIR,
-    help="Path to S3DIS data (default is %s)" % DEFAULT_DATA_DIR)
+    default='/data/3D/s3dis_aligned',
+    help="Path to S3DIS data")
 
 args = p.parse_args()
 

@@ -83,4 +83,4 @@ stochastic_dilation = True
 sto_dilated_epsilon = 0.2   # Stochastic probability of dilatioin [Default: 0.2]
 skip_connect = 'residual'   # Skip Connections (residual, dense, none) [default: residual]
 edge_lay = 'dilated'    # The type of edge layers (dilated, knn) [default: dilated]
-gcn = 'edgeconv'    # The type of GCN layers (mrgcn, edgeconv) [default: edgeconv]
+gcn = 'mrgcn'    # The type of GCN layers (mrgcn, edgeconv) [default: edgeconv]

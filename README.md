@@ -176,16 +176,21 @@ Here we list the commands for training/evaluating PointCNN on classification and
   ```
   python train_val_seg_deeepgcn.py -t /data/3D/s3dis_aligned/train_files_for_val_on_Area_5.txt -v /data/3D/s3dis_aligned/val_files_Area_5.txt -s ../pointcnn_exp/seg -m deepgcn -x s3dis_x8_2048_fps
   ```
+
   
+
   - testing:
   ```
    python test_general_seg.py -t /data/3D/s3dis_aligned/val_files_Area_5.txt -l ckpt/iter-41500 -m pointcnn_seg -x s3dis_x8_2048_fps
   ```
-  ./test_s3dis.sh -g 0 -x s3dis_x8_2048_k16_fps -a 1 -l ../../models/seg/s3dis_x8_2048_fps_k16_xxxx/ckpts/iter-xxxxx -r 4
+
+  - evaluation
+  ```
   cd ../evaluation
-  python3 s3dis_merge.py -d <path to *_pred.h5>
+  python3 s3dis_merge.py -d /data/3D/s3dis_aligned/Area_5
   python3 eval_s3dis.py
   ```
+  
  We use a hidden marker file to note when prepare is finished to avoid re-processing. This cache can be invalidated by deleting the markers. 
  
  Please notice that these command just for Area 1 (specified by -a 1 option) validation. Results on other Areas can be computed by iterating -a option.
