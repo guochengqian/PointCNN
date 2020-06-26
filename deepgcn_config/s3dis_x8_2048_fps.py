@@ -12,8 +12,8 @@ num_epochs = 1024
 label_weights = [1.0] * num_class
 
 learning_rate_base = 0.001
-decay_steps = 5000
-decay_rate = 0.8
+decay_steps = 300000
+decay_rate = 0.5
 learning_rate_min = 1e-6
 step_val = 500
 

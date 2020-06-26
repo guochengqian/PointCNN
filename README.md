@@ -168,8 +168,8 @@ Here we list the commands for training/evaluating PointCNN on classification and
   ```
   cd data_conversions
   python3 prepare_s3dis_label.py --data_dir /data/3D/Stanford3dDataset_v1.2 --output_dir /data/3D/s3dis_aligned/
-  python3 prepare_s3dis_data.py
-  python3 prepare_s3dis_filelists.py
+  python3 prepare_s3dis_data.py  -f /data/3D/s3dis_aligned/
+  python3 prepare_s3dis_filelists.py -f /data/3D/s3dis_aligned/
   ```
   
   - training:
