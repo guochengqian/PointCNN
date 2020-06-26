@@ -648,9 +648,9 @@ def pairwise_distance(point_cloud):
     point_cloud_transpose = tf.transpose(point_cloud, perm=[0, 2, 1])
     point_cloud_inner = tf.matmul(point_cloud, point_cloud_transpose)
     point_cloud_inner = -2 * point_cloud_inner
-    point_cloud_square = tf.reduce_sum(tf.square(point_cloud), axis=-1, keep_dims=True)
-    point_cloud_square_tranpose = tf.transpose(point_cloud_square, perm=[0, 2, 1])
-    return point_cloud_square + point_cloud_inner + point_cloud_square_tranpose
+    point_cloud_square = tf.reduce_sum(tf.square(point_cloud), axis=-1, keepdims=True)
+    point_cloud_square_transpose = tf.transpose(point_cloud_square, perm=[0, 2, 1])
+    return point_cloud_square + point_cloud_inner + point_cloud_square_transpose
 
 
 def knn(adj_matrix, k=20):

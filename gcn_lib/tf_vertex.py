@@ -73,7 +73,7 @@ def get_max_relat_feature(inputs, neigh_idx, k):
 
     inputs_central = tf.tile(inputs_central, [1, 1, k, 1])
 
-    aggr_neigh_features = tf.reduce_max(inputs_neighbors - inputs_central, axis=-2, keep_dims=True)
+    aggr_neigh_features = tf.reduce_max(inputs_neighbors - inputs_central, axis=-2, keepdims=True)
     aggr_features = tf.concat([in_copy, aggr_neigh_features], axis=-1)
     return aggr_features
 
@@ -96,7 +96,7 @@ def edge_conv_layer(inputs,
                    num_outputs,
                    scope=scope,
                    is_training=is_training)
-    vertex_features = tf.reduce_max(out, axis=-2, keep_dims=True)
+    vertex_features = tf.reduce_max(out, axis=-2, keepdims=True)
 
     return vertex_features
 
@@ -174,7 +174,7 @@ def get_graphsage_feature(inputs,
                               num_dims,
                               scope=scope,
                               is_training=is_training)
-    aggr_neigh_features = tf.reduce_max(neigh_features, axis=-2, keep_dims=True)
+    aggr_neigh_features = tf.reduce_max(neigh_features, axis=-2, keepdims=True)
     aggr_features = tf.concat([in_copy, aggr_neigh_features], axis=-1)
     return aggr_features
 
@@ -250,6 +250,6 @@ def get_gin_feature(inputs, neigh_idx, k):
     inputs_flat = tf.reshape(inputs, [-1, num_dims])
     inputs_neighbors = tf.gather(inputs_flat, neigh_idx + idx)
     neigh_features = inputs_neighbors
-    aggr_neigh_features = tf.reduce_sum(neigh_features, axis=-2, keep_dims=True)
+    aggr_neigh_features = tf.reduce_sum(neigh_features, axis=-2, keepdims=True)
     aggr_features = aggr_neigh_features
     return aggr_features
