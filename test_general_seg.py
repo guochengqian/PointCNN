@@ -41,7 +41,7 @@ def main():
 
     ######################################################################
     # Placeholders
-    indices = tf.placeholder(tf.int32, shape=(batch_size, None, 2), name="indices")
+    indices = tf.placeholder(tf.int32, shape=(batch_size, sample_num, 2), name="indices")
     is_training = tf.placeholder(tf.bool, name='is_training')
     pts_fts = tf.placeholder(tf.float32, shape=(batch_size, max_point_num, setting.data_dim), name='points')
     ######################################################################
@@ -110,6 +110,8 @@ def main():
                 probs_2d = np.reshape(seg_probs, (sample_num * batch_size, -1))
 
                 predictions = [(-1, 0.0)] * point_num
+
+                # todo: read code here. How does they process this file.
                 for idx in range(sample_num * batch_size):
                     point_idx = indices_shuffle[idx]
                     probs = probs_2d[idx, :]
