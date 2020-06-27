@@ -3,7 +3,7 @@ import math
 
 num_class = 13
 
-sample_num = 2048
+sample_num = 4096
 
 batch_size = 16
 
@@ -12,7 +12,7 @@ num_epochs = 1024
 label_weights = [1.0] * num_class
 
 learning_rate_base = 0.001
-decay_steps = 300000
+decay_steps = 5000
 decay_rate = 0.5
 learning_rate_min = 1e-6
 step_val = 500
@@ -72,7 +72,7 @@ keep_remainder = True
 num_layers = 28  # GCN_layers number [default: 28]
 bn_init_decay = 0.5     # BN decay rate for bn decay [default: 0.5]
 bn_decay_decay_rate = 0.5
-bn_decay_decay_step = 300000
+bn_decay_decay_step = 5000
 bn_decay_clip = 0.99
 num_neighbors = [16]  # The number of k nearest neighbors [Default: 16].
 # You can either pass a single value for all layers or one value per layer.
