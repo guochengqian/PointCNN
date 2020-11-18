@@ -182,6 +182,7 @@ Here we list the commands for training/evaluating PointCNN on classification and
   - testing:
   ```
    python test_general_seg.py -t /data/3D/s3dis_aligned/val_files_Area_5.txt -l ckpt/iter-41500 -m pointcnn_seg -x s3dis_x8_2048_fps
+   python test_general_seg_deepgcn.py -t /data/3D/s3dis_aligned/val_files_Area_5.txt -l ckpt/iter-41500 -m deepgcn -x s3dis_x8_2048_fps
   ```
 
   - evaluation
